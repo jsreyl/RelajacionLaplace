@@ -1,0 +1,58 @@
+//Quiero resolver ecución de Laplace 2d: d2U/dx2 + d2U/dy2 = 0 
+#include<iostream>
+#include<vector>
+
+const double Delta = 0.1; //tamaño de la variación
+const double L = 1.479; //tamaño del dominio
+const int N = int(L/Delta)+1; //número de divisiones de la malla
+
+typedef std::vector<double> Matrix;
+
+void initial_conditions(Matrix & m);
+void boundary_conditions(Matrix & m);
+void evolve(Matrix & m);
+void print(const Matrix & m);
+
+int main(int argc, char **argv){
+  double xmax;
+  double ymax;
+  
+  Matrix data(N*N);
+
+  //Condiciones iniciales: llenamos la matriz de ceros
+  initial_conditions(data);
+  print(data);
+  //Condiciones de frontera: llenamos solo los datos que necesitan condición
+  boundary_conditions(data);
+  
+  //Hacemos loop de la función de evolución
+  
+
+    return 0;
+}
+
+void initial_conditions(Matrix & m){
+  for (int ii= 0; ii<N; ++ii)
+    for(int jj=0; jj<N; ++jj)
+      m[ii*N+jj] = 0.0;
+}
+
+void print(const Matrix & m){
+  for (int ii= 0; ii<N; ++ii){
+    for(int jj=0; jj<N; ++jj){
+      std::cout<<m[ii*N+jj]<<" ";
+    }
+    std::cout<<"\n";
+  }
+
+}
+
+void boundary_conditions(Matrix & m){
+  int ii=0, jj=0;
+  //A la pared de arriba le asigno 100
+  ii = 0;
+  for(int jj=0; jj<N; ++jj){
+    m[ii*N+jj]= 100.0;
+  }
+  
+}
